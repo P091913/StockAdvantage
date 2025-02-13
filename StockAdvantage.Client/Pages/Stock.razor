@@ -5,9 +5,20 @@
 @implements IAsyncDisposable
 
 <h3>Stock Price Tracker</h3>
+<p>Current Balance: @balance.ToString("C")</p>
 
-<p>Stock Symbol: @StockSymbol</p>
+<label for="Symbol">Stock Symbol</label>
+<input id="Symbol" type="text" @bind="StockSymbol"/>
+<button @onclick="RequestStockPrice">Get Price</button>
+
 <p>Current Price: @StockPrice.ToString("F2")</p>
+
+@if (StockPrice > 0)
+{
+<label for="Shares">Shares to Buy</label>
+<input id="Shares" type="number" min="1" @bind="SharesToBuy"/>
+<button @onclick="BuyShares">Buy</button>
+}
 
 @if (IsConnected)
 {
@@ -21,36 +32,42 @@ else
 }
 
 @code {
-    private string StockSymbol = "AAPL";
+    private string StockSymbol { get; set; } = "";
+    private decimal balance = 0m;
     private decimal StockPrice { get; set; }
+    private int SharesToBuy { get; set; } = 0;
     private HubConnection? hubConnection;
     private bool IsConnected => hubConnection?.State == HubConnectionState.Connected;
 
     protected override async Task OnInitializedAsync()
     {
         await StartConnection();
+        await LoadData();
     }
 
     private async Task StartConnection()
     {
         if (hubConnection is not null && hubConnection.State == HubConnectionState.Connected)
         {
-            return; // Already connected
+            return;
         }
 
         hubConnection = new HubConnectionBuilder()
-            .WithUrl(Navigation.ToAbsoluteUri("/stockHub")) 
+            .WithUrl(Navigation.ToAbsoluteUri("/stockHub"))
             .Build();
 
-        // Listen for stock updates
         hubConnection.On<string, decimal>("ReceiveStockUpdate", (symbol, price) =>
         {
             StockSymbol = symbol;
             StockPrice = price;
-
-            // Debugging: Log the received values to the console
             Console.WriteLine($"Received stock update: {StockSymbol} - {StockPrice}");
+            InvokeAsync(StateHasChanged);
+        });
 
+        hubConnection.On<string, int, decimal, decimal>("StockPurchased", (symbol, shares, price, updatedBalance) =>
+        {
+            balance = updatedBalance; 
+            Console.WriteLine($"Purchased {shares} shares of {symbol} at {price}. New balance: {balance}");
             InvokeAsync(StateHasChanged);
         });
 
@@ -58,13 +75,46 @@ else
         {
             await hubConnection.StartAsync();
             Console.WriteLine("SignalR connection established.");
-            _ = StartStockUpdates(); // Start the stock update loop
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error connecting to SignalR: {ex.Message}");
         }
     }
+    
+    private async Task LoadData()
+    {
+        if (hubConnection is not null)
+        {
+            balance = await hubConnection.InvokeAsync<decimal>("GetBalance");
+            InvokeAsync(StateHasChanged);
+        }
+    }
+    
+    private async Task RequestStockPrice()
+    {
+        if (!string.IsNullOrWhiteSpace(StockSymbol) && IsConnected)
+        {
+            if (!string.IsNullOrWhiteSpace(StockSymbol))
+            {
+                await hubConnection.SendAsync("SendStockUpdate", StockSymbol);
+            }
+            else
+            {
+                Console.WriteLine("Invalid stock symbol.");
+            }
+            Console.WriteLine($"Requested price update for {StockSymbol}");
+        }
+    }
+    
+    private async Task BuyShares()
+    {
+        if (StockPrice > 0 && SharesToBuy > 0 && IsConnected)
+        {
+            await hubConnection.SendAsync("BuyStock", StockSymbol, SharesToBuy, StockPrice);
+        }
+    }
+
 
     private async Task StartStockUpdates()
     {

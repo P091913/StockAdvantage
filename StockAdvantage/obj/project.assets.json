@@ -1491,19 +1491,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/jarrettplate/.nuget/packages/": {}
+    "C:\\Users\\garre\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage/StockAdvantage.csproj",
+      "projectUniqueName": "C:\\Users\\garre\\OneDrive\\Desktop\\Adv .Net\\StockAdvanatge\\StockAdvantage\\StockAdvantage\\StockAdvantage.csproj",
       "projectName": "StockAdvantage",
-      "projectPath": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage/StockAdvantage.csproj",
-      "packagesPath": "/Users/jarrettplate/.nuget/packages/",
-      "outputPath": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage/obj/",
+      "projectPath": "C:\\Users\\garre\\OneDrive\\Desktop\\Adv .Net\\StockAdvanatge\\StockAdvantage\\StockAdvantage\\StockAdvantage.csproj",
+      "packagesPath": "C:\\Users\\garre\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\garre\\OneDrive\\Desktop\\Adv .Net\\StockAdvanatge\\StockAdvantage\\StockAdvantage\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/jarrettplate/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\garre\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -1515,8 +1515,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj": {
-              "projectPath": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj"
+            "C:\\Users\\garre\\OneDrive\\Desktop\\Adv .Net\\StockAdvanatge\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj": {
+              "projectPath": "C:\\Users\\garre\\OneDrive\\Desktop\\Adv .Net\\StockAdvanatge\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj"
             }
           }
         }
@@ -1530,7 +1530,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -1564,7 +1565,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
