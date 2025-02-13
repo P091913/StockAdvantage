@@ -1,0 +1,158 @@
+﻿@page "/SellStock"
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
+@rendermode InteractiveWebAssembly
+@implements IAsyncDisposable
+
+<h3>Sell Stocks</h3>
+
+<p>Current Balance: @balance.ToString("C")</p>
+
+@if (purchasedStocks.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Shares</th>
+                <th>Purchase Price</th>
+                <th>Shares to Sell</th>
+                <th>Sell Price</th>
+                <th>Sell</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stock in purchasedStocks)
+            {
+                <tr>
+                    <td>@stock.Symbol</td>
+                    <td>@stock.Shares</td>
+                    <td>@stock.PurchasePrice.ToString("C")</td>
+                    <td>
+                        <input type="number" min="1" max="@stock.Shares" @bind="stock.SharesToSell" />
+                    </td>
+                    <td>
+                        <input type="number" min="0" step="0.01" @bind="stock.SellPrice" />
+                    </td>
+                    <td>
+                        <button @onclick="() => SellShares(stock)">Sell</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No stocks purchased.</p>
+}
+
+@if (IsConnected)
+{
+    <p style="color: green;">Connected to stock updates</p>
+}
+else
+{
+    <p style="color: red;">Disconnected from stock updates</p>
+    <button @onclick="StartConnection">Reconnect</button>
+}
+
+@code {
+    private List<PurchasedStock> purchasedStocks = new();
+    private decimal balance = 0m; 
+    private HubConnection? hubConnection;
+    private bool IsConnected => hubConnection?.State == HubConnectionState.Connected;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await StartConnection();
+        await LoadData();
+    }
+
+    private async Task StartConnection()
+    {
+        if (hubConnection is not null && hubConnection.State == HubConnectionState.Connected)
+        {
+            return;
+        }
+
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(Navigation.ToAbsoluteUri("/stockHub"))
+            .Build();
+
+        hubConnection.On<string, int, decimal, decimal>("StockSold", (symbol, shares, price, updatedBalance) =>
+        {
+            balance = updatedBalance;
+
+            var stock = purchasedStocks.FirstOrDefault(s => s.Symbol == symbol);
+            if (stock != null)
+            {
+                stock.Shares -= shares;
+                if (stock.Shares <= 0)
+                {
+                    purchasedStocks.Remove(stock);
+                }
+            }
+
+            InvokeAsync(StateHasChanged);
+        });
+
+        try
+        {
+            await hubConnection.StartAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error connecting to SignalR: {ex.Message}");
+        }
+    }
+
+    private async Task LoadData()
+    {
+        if (hubConnection is not null)
+        {
+            balance = await hubConnection.InvokeAsync<decimal>("GetBalance");
+            purchasedStocks = await hubConnection.InvokeAsync<List<PurchasedStock>>("GetPurchasedStocks");
+            InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async Task SellShares(PurchasedStock stock)
+    {
+        if (stock.SharesToSell > 0 && stock.SharesToSell <= stock.Shares && stock.SellPrice > 0 && IsConnected)
+        {
+            await hubConnection.SendAsync("SellStock", stock.Symbol, stock.SharesToSell, stock.SellPrice, DateTime.UtcNow);
+
+            stock.Shares -= stock.SharesToSell;
+            if (stock.Shares <= 0)
+            {
+                purchasedStocks.Remove(stock);
+            }
+
+            InvokeAsync(StateHasChanged);
+        }
+        else
+        {
+            Console.WriteLine("Invalid input: Please enter valid shares and sell price.");
+        }
+    }
+
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+
+    private class PurchasedStock
+    {
+        public string Symbol { get; set; } = "";
+        public int Shares { get; set; }
+        public decimal PurchasePrice { get; set; }
+        public DateTime PurchaseDate { get; set; }
+        public int SharesToSell { get; set; }
+        public decimal SellPrice { get; set; } 
+    }
+}
