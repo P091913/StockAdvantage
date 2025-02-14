@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj": {}
+    "C:\\Users\\alexc\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj": {}
   },
   "projects": {
-    "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj": {
+    "C:\\Users\\alexc\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj",
+        "projectUniqueName": "C:\\Users\\alexc\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj",
         "projectName": "StockAdvantage.Client",
-        "projectPath": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj",
-        "packagesPath": "/Users/jarrettplate/.nuget/packages/",
-        "outputPath": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/obj/",
+        "projectPath": "C:\\Users\\alexc\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj",
+        "packagesPath": "C:\\Users\\alexc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\alexc\\StockAdvantage\\StockAdvantage.Client\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/jarrettplate/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\alexc\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -37,7 +37,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -54,13 +55,13 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.0, )",
+              "version": "[9.0.2, )",
               "autoReferenced": true
             },
             "Microsoft.NET.Sdk.WebAssembly.Pack": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.0, )",
+              "version": "[9.0.2, )",
               "autoReferenced": true
             }
           },
@@ -78,7 +79,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
-              "version": "[9.0.0, 9.0.0]"
+              "version": "[9.0.2, 9.0.2]"
             }
           ],
           "frameworkReferences": {
@@ -86,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

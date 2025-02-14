@@ -4,7 +4,7 @@ using StockAdvantage.Components;
 
 namespace StockAdvantage.Hubs;
 
-public class StockService
+public class             StockService
 {
     private readonly IHubContext<StockHub> _hubContext;
     private readonly HttpClient _httpClient;

@@ -4,10 +4,90 @@
 @rendermode InteractiveWebAssembly
 @implements IAsyncDisposable
 
-<h3>Stock Price Tracker</h3>
+<h3>Roobinhood</h3>
+<br />
 
-<p>Stock Symbol: @StockSymbol</p>
-<p>Current Price: @StockPrice.ToString("F2")</p>
+<h2>Balance: @balance.ToString("C")</h2>
+<br />
+
+<form>
+    <label for="stockSym">Select stock:</label>
+    <select id="stockSym" @bind="StockSymbol">
+        <option value="">Select stock</option>
+        @foreach (var stock in stockList)
+        {
+            <option value="@stock.Symbol">@stock.Symbol</option>
+        }
+    </select>
+
+    <p>Selected Stock: @StockSymbol</p>
+
+    <label for="numStock">Number of shares:</label>
+    <input id="numStock" name="numStock" type="number" min="1" @bind="numOfStock" />
+    <br />
+
+    <p>Current Price: @StockPrice.ToString("C")</p>
+    <p>Total Cost: @((StockPrice * numOfStock).ToString("C"))</p>
+
+
+    <input type="submit" value="Buy" @onclick="CalcTotalCost" @onclick:preventDefault />
+</form>
+
+<br />
+
+<h3>Portfolio</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Company</th>
+            <th>Shares Owned</th>
+            <th>Purchase Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stock in stockList)
+        {
+            @if (stock.ownedShares > 0)
+            {
+                <tr>
+                    <td>@stock.Symbol</td>
+                    <td>@stock.ownedShares</td>
+                    <td>@stock.price.ToString("C")</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+<h3>Sell Stocks</h3>
+<form>
+    <label for="profitButton">Choose stock to sell:</label>
+    <select id="profitButton" @bind="StockSymbol">
+        <option value="">Select stock to sell</option>
+        @foreach (var stock in stockList)
+        {
+            @if (stock.ownedShares > 0)
+            {
+                <option value="@stock.Symbol">@stock.Symbol</option>
+            }
+        }
+    </select>
+    <br />
+
+    <label for="numStockSell">Number of shares:</label>
+    <input id="numStockSell" name="numStockSell" type="number" min="1" @bind="numOfStock" />
+    <br />
+
+    <input type="submit" value="Sell" @onclick="Sell" @onclick:preventDefault />
+</form>
+
+<br />
+
+<p>Profit: @profit.ToString("C")</p>
+
+<br />
 
 @if (IsConnected)
 {
@@ -16,15 +96,57 @@
 else
 {
     <p style="color: red;">Disconnected from stock updates</p>
-
     <button @onclick="StartConnection">Reconnect</button>
 }
 
 @code {
-    private string StockSymbol = "AAPL";
+    private decimal TotalCost;
+    private string StockSymbol;
     private decimal StockPrice { get; set; }
+    private int numOfStock { get; set; }
+    private decimal balance { get; set; } = 50000; 
     private HubConnection? hubConnection;
     private bool IsConnected => hubConnection?.State == HubConnectionState.Connected;
+    private List<StockInfo> stockList = new();
+    private decimal profit { get; set; }
+
+    private void CalcTotalCost()
+    {
+        var selectedStock = stockList.FirstOrDefault(s => s.Symbol == StockSymbol);
+
+        if (selectedStock == null)
+        {
+            Console.WriteLine("Invalid stock selection.");
+            return;
+        }
+
+        StockPrice = selectedStock.price; // Fetch current price
+        TotalCost = StockPrice * numOfStock;
+        
+        if (balance < TotalCost)
+        {
+            Console.WriteLine("Insufficient funds, lol broke");
+            return;
+        }
+        
+        balance -= TotalCost;
+        selectedStock.ownedShares += numOfStock;
+    }
+
+    private void Sell()
+    {
+        var selectedStock = stockList.FirstOrDefault(s => s.Symbol == StockSymbol);
+
+        if (selectedStock == null || selectedStock.ownedShares < numOfStock)
+        {
+            Console.WriteLine("Invalid stock sell");
+            return;
+        }
+        
+        profit = StockPrice * numOfStock;
+        balance += profit;
+        selectedStock.ownedShares -= numOfStock;
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -47,10 +169,6 @@ else
         {
             StockSymbol = symbol;
             StockPrice = price;
-
-            // Debugging: Log the received values to the console
-            Console.WriteLine($"Received stock update: {StockSymbol} - {StockPrice}");
-
             InvokeAsync(StateHasChanged);
         });
 
@@ -58,21 +176,16 @@ else
         {
             await hubConnection.StartAsync();
             Console.WriteLine("SignalR connection established.");
-            _ = StartStockUpdates(); // Start the stock update loop
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error connecting to SignalR: {ex.Message}");
         }
-    }
-
-    private async Task StartStockUpdates()
-    {
-        while (IsConnected)
+        
+        var random = new Random();
+        foreach (var symbol in new[] { "GME", "BTC", "DOGE", "AMC", "TSLA", "MOON", "AMD", "NVDA" })
         {
-            await hubConnection.SendAsync("SendStockUpdate", StockSymbol);
-            Console.WriteLine("Requesting stock update...");
-            await Task.Delay(5000); 
+            stockList.Add(new StockInfo(symbol, random.Next(10, 500), 0));
         }
     }
 
