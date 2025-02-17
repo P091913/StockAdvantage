@@ -1,25 +1,29 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj": {}
+    "D:\\IHCC\\1Winter\\advanced .net\\final project\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj": {}
   },
   "projects": {
-    "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj": {
+    "D:\\IHCC\\1Winter\\advanced .net\\final project\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj",
+        "projectUniqueName": "D:\\IHCC\\1Winter\\advanced .net\\final project\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj",
         "projectName": "StockAdvantage.Client",
-        "projectPath": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj",
-        "packagesPath": "/Users/jarrettplate/.nuget/packages/",
-        "outputPath": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/obj/",
+        "projectPath": "D:\\IHCC\\1Winter\\advanced .net\\final project\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj",
+        "packagesPath": "C:\\Users\\ksoda\\.nuget\\packages\\",
+        "outputPath": "D:\\IHCC\\1Winter\\advanced .net\\final project\\StockAdvantage\\StockAdvantage.Client\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/jarrettplate/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\ksoda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\MicroFocus.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Micro Focus\\Visual COBOL\\NuGetPackages": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -54,13 +58,13 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.0, )",
+              "version": "[9.0.2, )",
               "autoReferenced": true
             },
             "Microsoft.NET.Sdk.WebAssembly.Pack": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.0, )",
+              "version": "[9.0.2, )",
               "autoReferenced": true
             }
           },
@@ -78,7 +82,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
-              "version": "[9.0.0, 9.0.0]"
+              "version": "[9.0.2, 9.0.2]"
             }
           ],
           "frameworkReferences": {
@@ -86,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

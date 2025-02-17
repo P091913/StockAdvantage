@@ -1491,32 +1491,36 @@
     ]
   },
   "packageFolders": {
-    "/Users/jarrettplate/.nuget/packages/": {}
+    "C:\\Users\\ksoda\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage/StockAdvantage.csproj",
+      "projectUniqueName": "D:\\IHCC\\1Winter\\advanced .net\\final project\\StockAdvantage\\StockAdvantage\\StockAdvantage.csproj",
       "projectName": "StockAdvantage",
-      "projectPath": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage/StockAdvantage.csproj",
-      "packagesPath": "/Users/jarrettplate/.nuget/packages/",
-      "outputPath": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage/obj/",
+      "projectPath": "D:\\IHCC\\1Winter\\advanced .net\\final project\\StockAdvantage\\StockAdvantage\\StockAdvantage.csproj",
+      "packagesPath": "C:\\Users\\ksoda\\.nuget\\packages\\",
+      "outputPath": "D:\\IHCC\\1Winter\\advanced .net\\final project\\StockAdvantage\\StockAdvantage\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/jarrettplate/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\ksoda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\MicroFocus.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Micro Focus\\Visual COBOL\\NuGetPackages": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj": {
-              "projectPath": "/Users/jarrettplate/Desktop/Advanceddotnet/StockAdvantage/StockAdvantage.Client/StockAdvantage.Client.csproj"
+            "D:\\IHCC\\1Winter\\advanced .net\\final project\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj": {
+              "projectPath": "D:\\IHCC\\1Winter\\advanced .net\\final project\\StockAdvantage\\StockAdvantage.Client\\StockAdvantage.Client.csproj"
             }
           }
         }
@@ -1564,7 +1568,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
