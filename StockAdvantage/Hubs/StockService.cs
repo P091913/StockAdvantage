@@ -8,7 +8,7 @@ public class StockService
 {
     private readonly IHubContext<StockHub> _hubContext;
     private readonly HttpClient _httpClient;
-    private readonly string _apiKey = "REPLACE_API_KEY :)";
+    private readonly string _apiKey = "5aa750b636msh71ccf3f2db0d164p1d3ce9jsn204d9855c397";
 
     public StockService(IHubContext<StockHub> hubContext, HttpClient httpClient)
     {
@@ -26,7 +26,7 @@ public class StockService
     {
         try
         {
-            var url = $"https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol={symbol}&region=US";
+            var url = $"https://yahoo-finance15.p.rapidapi.com/api/v1/markets/stock/quotes?ticker=AAPL%2CMSFT%2C%5ESPX%2C%5ENYA%2CGAZP.ME%2CSIBN.ME%2CGEECEE.NS";
     
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("X-RapidAPI-Key", _apiKey);
